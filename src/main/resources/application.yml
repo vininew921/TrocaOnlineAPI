@@ -1,6 +1,21 @@
+server:
+    port: 8081
+
 spring:
   datasource:
-    url: ${DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/trocaOnline
+    username: postgres
+    password: 123
+
+  # JPA properties
   jpa:
-    hibernate:
-      ddl-auto: create
+    hibernate:  
+      ddl-auto: create # Primeira execução create, depois update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true # Só na primeira vez
+
+
