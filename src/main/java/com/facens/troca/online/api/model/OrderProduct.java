@@ -7,7 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="OrderProduct")
@@ -18,8 +18,9 @@ public class OrderProduct implements Serializable {
     @EmbeddedId
     private OrderProductId id;
 
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Integer amount;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     public OrderProduct(){
         //public
