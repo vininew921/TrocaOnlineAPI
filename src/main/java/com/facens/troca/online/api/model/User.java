@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 @Getter @Setter
 public class User {
     private static final long serialVersionUID = 1L;

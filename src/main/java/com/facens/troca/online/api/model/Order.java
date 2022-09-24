@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="Order")
+@Table(name="Orders")
 @Getter @Setter
 public class Order {
     private static final long serialVersionUID = 1L;
