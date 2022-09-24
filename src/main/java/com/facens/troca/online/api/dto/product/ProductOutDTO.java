@@ -3,7 +3,6 @@ package com.facens.troca.online.api.dto.product;
 import com.facens.troca.online.api.dto.user.UserOutDTO;
 import com.facens.troca.online.api.model.Category;
 import com.facens.troca.online.api.model.Product;
-import com.facens.troca.online.api.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +12,7 @@ import java.time.LocalDate;
 
 @Getter @Setter
 public class ProductOutDTO {
+    private Long id;
     private UserOutDTO owner;
     private Category category;
     private String title;
@@ -27,6 +27,7 @@ public class ProductOutDTO {
 
 
     public ProductOutDTO(UserOutDTO userOutDTO, Category cat, Product prod) {
+        this.id=prod.getId();
         this.owner=userOutDTO;
         this.category=cat;
         this.title=prod.getTitle();

@@ -5,13 +5,14 @@ import lombok.Setter;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name="Orders")
 @Getter @Setter
-public class Order {
-    private static final long serialVersionUID = 1L;
+public class Order implements Serializable {
+    private static final long serialVersionUID = 2232332L;
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long   id;
@@ -23,4 +24,8 @@ public class Order {
     @NumberFormat(pattern = "#.##0.00")
     @Column(name="totalvalue")
     private BigDecimal totalValue;
+
+    public Order(){
+        // public
+    }
 }

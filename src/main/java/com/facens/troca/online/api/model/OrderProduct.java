@@ -2,11 +2,11 @@ package com.facens.troca.online.api.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.NumberFormat;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,4 +20,8 @@ public class OrderProduct implements Serializable {
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
+    public OrderProduct(){
+        //public
+    }
 }

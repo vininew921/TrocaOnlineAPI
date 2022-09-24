@@ -5,11 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="users")
 @Getter @Setter
-public class User {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,9 @@ public class User {
     private String password;
     private String photoUrl;
 
-    public User(UserRegisterDTO inUser) {
+    public User(){}
+    public User(UserRegisterDTO inUser, Role role) {
+        this.role=role;
         this.name=inUser.getName();
         this.email=inUser.getEmail();
         this.password=inUser.getPassword();
