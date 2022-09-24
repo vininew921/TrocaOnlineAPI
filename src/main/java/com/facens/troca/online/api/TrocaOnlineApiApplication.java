@@ -9,5 +9,4 @@ public class TrocaOnlineApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrocaOnlineApiApplication.class, args);
 	}
-
 }
