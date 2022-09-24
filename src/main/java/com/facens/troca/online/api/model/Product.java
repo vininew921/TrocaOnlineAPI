@@ -1,12 +1,13 @@
 package com.facens.troca.online.api.model;
 
+import com.facens.troca.online.api.dto.product.ProductRegisterDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="Product")
@@ -35,10 +36,21 @@ public class Product {
     private Integer maxDays;
 
     @Column(name="startdate")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
     @Column(name="enddate")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
     @Column(name="issale")
     private Boolean isSale;
 
+    public Product(User user, Category cat, ProductRegisterDTO dto) {
+        this.user=user;
+        this.category=cat;
+        this.title=dto.getTitle();
+        this.description=dto.getDescription();
+        this.value=dto.getValue();
+        this.maxDays=dto.getMaxDays();
+        this.startDate=dto.getStartDate();
+        this.endDate=dto.getEndDate();
+        this.isSale=dto.getIsSale();
+    }
 }
