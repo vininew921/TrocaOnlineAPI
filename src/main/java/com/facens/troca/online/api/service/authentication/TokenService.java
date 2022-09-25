@@ -13,9 +13,9 @@ import java.util.Date;
 @Service
 public class TokenService {
 
-	@Value("${forum.jwt.expiration}")
+	@Value("${jwt.expiration}")
 	private String expiration;
-	@Value("${forum.jwt.secret}")
+	@Value("${jwt.secret}")
 	private String secret;
 	
 	public String generateToken(Authentication authentication) {

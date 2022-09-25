@@ -3,7 +3,6 @@ package com.facens.troca.online.api.config.security;
 import com.facens.troca.online.api.repository.UserRepository;
 import com.facens.troca.online.api.service.authentication.AuthenticationService;
 import com.facens.troca.online.api.service.authentication.TokenService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class SecurityConfig {
 
-    private AuthenticationService authenticationService;
-    private TokenService tokenService;
-    private UserRepository userRepository;
+    private final AuthenticationService authenticationService;
+    private final TokenService tokenService;
+    private final UserRepository userRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

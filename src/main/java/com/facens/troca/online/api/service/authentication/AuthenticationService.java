@@ -15,11 +15,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationService implements UserDetailsService {
 
-    private UserRepository repository;
+    private final UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = repository.findByUsernameIgnoreCase(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> user = repository.findByEmailIgnoreCase(email);
 
         if(user.isPresent()) {
             return user.get();

@@ -6,7 +6,6 @@ import com.facens.troca.online.api.model.Role;
 import com.facens.troca.online.api.model.User;
 import com.facens.troca.online.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,10 +21,10 @@ public class UserService {
     private final RoleService roleService;
 
     public UserOutDTO insert(UserRegisterDTO inUser) {
+        validateEmail(inUser);
+        validateUsername(inUser);
         Role role = roleService.getByIdRaw(2L);
         User user = new User(inUser, role);
-        validateEmail(user);
-        validateUsername(user);
         user = repository.save(user);
         return new UserOutDTO(user);
     }
@@ -50,16 +49,16 @@ public class UserService {
         }
     }
 
-    private void validateEmail(User user) {
-        Optional<User> userByEmail = repository.findByEmailIgnoreCase(user.getEmail());
+    private void validateEmail(UserRegisterDTO userDTO) {
+        Optional<User> userByEmail = repository.findByEmailIgnoreCase(userDTO.getEmail());
 
         if (userByEmail.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already in use");
         }
     }
 
-    private void validateUsername(User user) {
-        Optional<User> userByUsername = repository.findByUsernameIgnoreCase(user.getEmail());
+    private void validateUsername(UserRegisterDTO userDTO) {
+        Optional<User> userByUsername = repository.findByUsernameIgnoreCase(userDTO.getUsername());
 
         if (userByUsername.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already in use");

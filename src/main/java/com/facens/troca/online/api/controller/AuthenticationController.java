@@ -22,9 +22,8 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private AuthenticationManager authenticationManager;
-
-    private TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
     @PostMapping
     public ResponseEntity<?> authenticate(@RequestBody @Valid UserLoginDTO userLoginDTO){
