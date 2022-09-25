@@ -7,6 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name="Orders")
@@ -28,4 +29,7 @@ public class Order implements Serializable {
     public Order(){
         // public
     }
+
+    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OrderProduct> items;
 }
