@@ -4,17 +4,18 @@ import com.facens.troca.online.api.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class UserOutDTO {
-    private Long   id;
-    private String name;
+    private Long id;
+    private String username;
     private String email;
     private String photoUrl;
 
     public UserOutDTO(User user) {
-        this.id= user.getId();
-        this.name= user.getName();
-        this.email= user.getEmail();
-        this.photoUrl=getPhotoUrl();
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.photoUrl = getPhotoUrl();
     }
 }
