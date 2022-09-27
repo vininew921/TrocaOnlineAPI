@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .antMatchers("/orders/**", "/products/**").hasAuthority("USER")
                 .antMatchers("/categories/**", "/roles/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
+                .and().cors()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
