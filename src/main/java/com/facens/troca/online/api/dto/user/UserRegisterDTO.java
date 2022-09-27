@@ -13,14 +13,14 @@ import javax.validation.constraints.Size;
 public class UserRegisterDTO {
 
     @NotNull(message = "Username must be not null")
-    @Size(max = 20, message = "Username length must be less than 20")
+    @Size(max = 50, message = "Username length must be less than 50")
     private String username;
     @NotNull(message = "Email must be not null")
-    @Size(max = 30, message = "Email length must be less than 30")
+    @Size(max = 256, message = "Email length must be less than 256")
     @Email(message = "Email must be valid")
     private String email;
     @NotNull(message = "Password must be not null")
-    @Size(min = 6, max = 50, message = "Password length must be between 6 and 50")
+    @Size(min = 6, max = 256, message = "Password length must be between 6 and 256")
     private String password;
     private String photoUrl;
 
