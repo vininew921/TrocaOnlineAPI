@@ -2,6 +2,8 @@ package com.facens.troca.online.api.service;
 
 import com.facens.troca.online.api.dto.user.UserOutDTO;
 import com.facens.troca.online.api.dto.user.UserRegisterDTO;
+import com.facens.troca.online.api.exceptionhandler.exceptions.UniqueEmailException;
+import com.facens.troca.online.api.exceptionhandler.exceptions.UniqueUsernameException;
 import com.facens.troca.online.api.model.Role;
 import com.facens.troca.online.api.model.User;
 import com.facens.troca.online.api.repository.UserRepository;
@@ -53,7 +55,7 @@ public class UserService {
         Optional<User> userByEmail = repository.findByEmailIgnoreCase(userDTO.getEmail());
 
         if (userByEmail.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already in use");
+            throw new UniqueEmailException("During->"+Thread.currentThread().getStackTrace());
         }
     }
 
@@ -61,7 +63,7 @@ public class UserService {
         Optional<User> userByUsername = repository.findByUsernameIgnoreCase(userDTO.getUsername());
 
         if (userByUsername.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already in use");
+            throw new UniqueUsernameException("During->"+Thread.currentThread().getStackTrace());
         }
     }
 }

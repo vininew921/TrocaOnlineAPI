@@ -30,7 +30,7 @@ public class ProductService {
 
     public ProductOutDTO getById(Long id) {
         Product prod= repository.findById(id).orElseThrow(() ->{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "None User was found by the informed id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "None Product was found by the informed id");
         });
         User user = prod.getUser();
         Category cat = prod.getCategory();
@@ -47,7 +47,7 @@ public class ProductService {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException error) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provided Category was not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provided Product was not found.");
         }
     }
 }
