@@ -25,7 +25,18 @@ public class ProductOutDTO {
     private LocalDate endDate;
     private Boolean isSale;
 
-
+    public ProductOutDTO(Product prod) {
+        this.id=prod.getId();
+        this.title=prod.getTitle();
+        this.description=prod.getDescription();
+        this.value=prod.getValue();
+        this.maxDays=prod.getMaxDays();
+        this.startDate=prod.getStartDate();
+        this.endDate=prod.getEndDate();
+        this.isSale=prod.getIsSale();
+        this.owner=new UserOutDTO(prod.getUser());
+        this.category=prod.getCategory();
+    }
     public ProductOutDTO(UserOutDTO userOutDTO, Category cat, Product prod) {
         this.id=prod.getId();
         this.owner=userOutDTO;
