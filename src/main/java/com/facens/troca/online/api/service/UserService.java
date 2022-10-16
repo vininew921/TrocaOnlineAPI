@@ -7,12 +7,14 @@ import com.facens.troca.online.api.exceptionhandler.exceptions.UniqueUsernameExc
 import com.facens.troca.online.api.model.Role;
 import com.facens.troca.online.api.model.User;
 import com.facens.troca.online.api.repository.UserRepository;
+import com.facens.troca.online.api.service.authentication.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -21,6 +23,7 @@ public class UserService {
 
     private final UserRepository repository;
     private final RoleService roleService;
+    private final TokenService tokenService;
 
     public UserOutDTO insert(UserRegisterDTO inUser) {
         validateEmail(inUser);
@@ -29,6 +32,10 @@ public class UserService {
         User user = new User(inUser, role);
         user = repository.save(user);
         return new UserOutDTO(user);
+    }
+
+    public UserOutDTO getByToken(String token) {
+        return getById(tokenService.getUserId(token));
     }
 
     public UserOutDTO getById(Long id) {
@@ -55,7 +62,7 @@ public class UserService {
         Optional<User> userByEmail = repository.findByEmailIgnoreCase(userDTO.getEmail());
 
         if (userByEmail.isPresent()) {
-            throw new UniqueEmailException("During->"+Thread.currentThread().getStackTrace());
+            throw new UniqueEmailException("During->" + Arrays.toString(Thread.currentThread().getStackTrace()));
         }
     }
 
@@ -63,7 +70,7 @@ public class UserService {
         Optional<User> userByUsername = repository.findByUsernameIgnoreCase(userDTO.getUsername());
 
         if (userByUsername.isPresent()) {
-            throw new UniqueUsernameException("During->"+Thread.currentThread().getStackTrace());
+            throw new UniqueUsernameException("During->" + Arrays.toString(Thread.currentThread().getStackTrace()));
         }
     }
 }
