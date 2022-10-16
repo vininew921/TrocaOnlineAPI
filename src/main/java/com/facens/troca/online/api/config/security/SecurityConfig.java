@@ -32,11 +32,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http,
-                                             BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
+    public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder encoder) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(authenticationService)
-                .passwordEncoder(bCryptPasswordEncoder)
+                .passwordEncoder(encoder)
                 .and()
                 .build();
     }
@@ -47,6 +46,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/auth", "/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/products/search/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/orders").hasAuthority("USER")
+                .antMatchers(HttpMethod.GET, "/users").hasAuthority("USER")
                 .antMatchers("/orders/**", "/products/**").hasAuthority("USER")
                 .antMatchers("/categories/**", "/roles/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
