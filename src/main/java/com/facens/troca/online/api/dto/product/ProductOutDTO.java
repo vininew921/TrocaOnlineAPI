@@ -24,6 +24,7 @@ public class ProductOutDTO {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate endDate;
     private Boolean isSale;
+    private String image;
 
     public ProductOutDTO(Product prod) {
         this.id=prod.getId();
@@ -36,6 +37,7 @@ public class ProductOutDTO {
         this.isSale=prod.getIsSale();
         this.owner=new UserOutDTO(prod.getUser());
         this.category=prod.getCategory();
+        this.image=prod.getImage();
     }
     public ProductOutDTO(UserOutDTO userOutDTO, Category cat, Product prod) {
         this.id=prod.getId();
@@ -48,5 +50,6 @@ public class ProductOutDTO {
         this.startDate=prod.getStartDate();
         this.endDate=prod.getEndDate();
         this.isSale=prod.getIsSale();
+        this.image=prod.getImage();
     }
 }
