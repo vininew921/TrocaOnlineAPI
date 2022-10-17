@@ -25,6 +25,13 @@ public class SecurityConfig {
     private final AuthenticationService authenticationService;
     private final TokenService tokenService;
     private final UserRepository userRepository;
+    private static final String[] AUTH_WHITELIST = {
+            "/auth",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/webjars/**"
+    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -43,7 +50,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth", "/users").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.POST,  "/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/products/search/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/orders").hasAuthority("USER")
                 .antMatchers(HttpMethod.GET, "/users").hasAuthority("USER")
