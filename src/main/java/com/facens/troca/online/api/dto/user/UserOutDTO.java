@@ -16,6 +16,6 @@ public class UserOutDTO {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
-        this.photoUrl = getPhotoUrl();
+        this.photoUrl = user.getPhotoUrl();
     }
 }
