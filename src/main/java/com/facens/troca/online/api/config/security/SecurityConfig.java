@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/products/search/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/orders").hasAuthority("USER")
                 .antMatchers(HttpMethod.GET, "/users").hasAuthority("USER")
+                .antMatchers(HttpMethod.PUT, "/users").hasAuthority("USER")
                 .antMatchers("/orders/**", "/products/**").hasAuthority("USER")
                 .antMatchers("/categories/**", "/roles/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()

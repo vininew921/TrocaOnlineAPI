@@ -2,6 +2,7 @@ package com.facens.troca.online.api.service;
 
 import com.facens.troca.online.api.dto.user.UserOutDTO;
 import com.facens.troca.online.api.dto.user.UserRegisterDTO;
+import com.facens.troca.online.api.dto.user.UserUpdateDTO;
 import com.facens.troca.online.api.exceptionhandler.exceptions.UniqueEmailException;
 import com.facens.troca.online.api.exceptionhandler.exceptions.UniqueUsernameException;
 import com.facens.troca.online.api.model.Role;
@@ -26,10 +27,17 @@ public class UserService {
     private final TokenService tokenService;
 
     public UserOutDTO insert(UserRegisterDTO inUser) {
-        validateEmail(inUser);
-        validateUsername(inUser);
         Role role = roleService.getByIdRaw(2L);
         User user = new User(inUser, role);
+        validateEmail(user);
+        validateUsername(user);
+        user = repository.save(user);
+        return new UserOutDTO(user);
+    }
+
+    public UserOutDTO update(UserUpdateDTO userDTO, String token) {
+        User user = getByIdRaw(tokenService.getUserId(token));
+        validateUpdate(userDTO, user);
         user = repository.save(user);
         return new UserOutDTO(user);
     }
@@ -58,18 +66,25 @@ public class UserService {
         }
     }
 
-    private void validateEmail(UserRegisterDTO userDTO) {
-        Optional<User> userByEmail = repository.findByEmailIgnoreCase(userDTO.getEmail());
+    private void validateUpdate(UserUpdateDTO userDTO, User user) {
+        user.setEmail(userDTO.getEmail());
+        user.setUsername(userDTO.getUsername());
+        user.setPhotoUrl(userDTO.getPhotoUrl());
+        validateEmail(user);
+        validateUsername(user);
+    }
 
-        if (userByEmail.isPresent()) {
+    private void validateEmail(User user) {
+        Optional<User> userByEmail = repository.findByEmailIgnoreCase(user.getEmail());
+        if (userByEmail.isPresent() && !user.equals(userByEmail.get())) {
             throw new UniqueEmailException("During->" + Arrays.toString(Thread.currentThread().getStackTrace()));
         }
     }
 
-    private void validateUsername(UserRegisterDTO userDTO) {
-        Optional<User> userByUsername = repository.findByUsernameIgnoreCase(userDTO.getUsername());
+    private void validateUsername(User user) {
+        Optional<User> userByUsername = repository.findByUsernameIgnoreCase(user.getUsername());
 
-        if (userByUsername.isPresent()) {
+        if (userByUsername.isPresent() && !user.equals(userByUsername.get())) {
             throw new UniqueUsernameException("During->" + Arrays.toString(Thread.currentThread().getStackTrace()));
         }
     }
