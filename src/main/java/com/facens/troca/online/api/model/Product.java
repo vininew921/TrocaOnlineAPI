@@ -42,6 +42,8 @@ public class Product implements Serializable {
     private LocalDate endDate;
     @Column(name="issale")
     private Boolean isSale;
+    @Column(name="image")
+    private String image;
 
     public Product(){}
     public Product(User user, Category cat, ProductRegisterDTO dto) {
@@ -54,5 +56,6 @@ public class Product implements Serializable {
         this.startDate=dto.getStartDate();
         this.endDate=dto.getEndDate();
         this.isSale=dto.getIsSale();
+        this.image=dto.getImage();
     }
 }

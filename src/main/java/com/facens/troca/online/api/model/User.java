@@ -1,6 +1,8 @@
 package com.facens.troca.online.api.model;
 
 import com.facens.troca.online.api.dto.user.UserRegisterDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +16,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 

@@ -4,12 +4,15 @@ import com.facens.troca.online.api.dto.product.ProductOutDTO;
 import com.facens.troca.online.api.dto.product.ProductRegisterDTO;
 import com.facens.troca.online.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
@@ -34,4 +37,15 @@ public class ProductController {
         return ResponseEntity.created(uri).body(prod);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductOutDTO>> getAllFilteredByName(
+            @RequestParam(required = false,defaultValue = "ASC") String order,
+            @RequestParam(required = false,defaultValue = "") String title,
+            @RequestParam(required = false,defaultValue = "10") Integer size,
+            @RequestParam(required = false,defaultValue = "0") Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(order.trim()), "title");
+        List<ProductOutDTO> products = service.getAllByPagination(pageRequest,  ""+title.trim());
+
+        return ResponseEntity.ok().body(products);
+    }
 }

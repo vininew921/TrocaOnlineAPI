@@ -9,9 +9,15 @@ import com.facens.troca.online.api.model.User;
 import com.facens.troca.online.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -30,7 +36,7 @@ public class ProductService {
 
     public ProductOutDTO getById(Long id) {
         Product prod= repository.findById(id).orElseThrow(() ->{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "None User was found by the informed id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "None Product was found by the informed id");
         });
         User user = prod.getUser();
         Category cat = prod.getCategory();
@@ -47,7 +53,15 @@ public class ProductService {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException error) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provided Category was not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provided Product was not found.");
         }
+    }
+
+    //Product URL filter (products/asc | products/desc | products/name)
+    public List<ProductOutDTO> getAllByPagination(PageRequest pageRequest, String name) {
+        Page<ProductOutDTO> response = new PageImpl<>(repository.findAllOrdered(pageRequest, name)
+                .stream()
+                .map(ProductOutDTO::new).collect(Collectors.toList()));
+        return response.getContent();
     }
 }

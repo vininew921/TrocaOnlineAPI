@@ -20,4 +20,5 @@ public class ProductRegisterDTO {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate endDate;
     private Boolean isSale;
+    private String image;
 }
