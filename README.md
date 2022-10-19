@@ -8,6 +8,13 @@ git clone https://github.com/vininew921/TrocaOnlineAPI.git
 ```
 Após isso é necessário mapear o banco utilizado no postgre, as tabelas são criadas/atualizadas automaticamente  com a função "ddl-auto: update" assim que o projeto é inicializado.
 
+# Testar online pelo Heroku
+
+Para testar a API online, sem a necessidade de clonar e rodar o projeto local, disponibilizou-se um swagger mapeando os endpoints da API.
+```
+https://troca-online-api-prod.herokuapp.com/swagger-ui/index.html
+```
+
 ## Introdução Arquitetura
 
 Para estruturar o Backend do projeto foi proposto a utilização do Framework Spring para criação de APIs Rest para realizar a manipulação dos dados persistidos no banco de dados da solução.
